@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - ${REDIS_DATA_PATH}:/data
+    environment:
+      - APPENDONLY=yes
+      - SAVE=900 1
+      - SAVE=300 10
+      - SAVE=60 10000
+
+  redis-insight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - "6378:5540"
+    volumes:
+      - ${REDIS_INSIGHT_PATH}:/data
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
