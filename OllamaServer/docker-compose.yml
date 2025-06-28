@@ -1,0 +1,34 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  ollama:
+    # Use the official Ollama Docker image
+    image: ollama/ollama:latest
+    # Map port 11434 from the container to the host,
+    # allowing access to Ollama's API from your machine.
+    ports:
+      - "11434:11434"
+    # Bind mount a local directory to Ollama's data directory inside the container.
+    # This now uses the OLLAMA_DATA_PATH variable defined in your .env file.
+    volumes:
+      - ${OLLAMA_DATA_PATH}:/root/.ollama
+    # Restart the container if it stops for any reason,
+    # unless it's explicitly stopped by the user.
+    restart: unless-stopped
+    # If you have a GPU and want Ollama to use it, uncomment the lines below
+    # and ensure you have the NVIDIA Container Toolkit installed.
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+# Define the volume (optional, if you prefer named volumes over bind mounts)
+# For this setup, we are using a bind mount, so a named volume is not strictly necessary,
+# but it's good to know for future reference.
+# volumes:
+#   ollama_data:
+#     driver: local
