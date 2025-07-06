@@ -1,0 +1,19 @@
+# Node and Docker
+node_modules/
+# .env
+# *.env
+docker-compose.override.yml
+*.log
+
+# Redis data
+redis-data/
+
+# Mongo data
+mongo-data/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VS Code settings (optional)
+.vscode/
